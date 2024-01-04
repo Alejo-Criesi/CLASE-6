@@ -12,7 +12,47 @@ let botonCalcular = document.querySelector(".calcular");
 
 let botonEliminar = document.querySelector(".eliminar");
 
-document.querySelector(".enviar").onclick = function () {
+let botonEnviar = document.querySelector(".enviar");
+
+function calcularEdadMayor(arrayDeInputs) {
+  let numeroComparador = arrayDeInputs[0];
+
+  for (let index = 0; index < arrayDeInputs.length; index++) {
+    if (numeroComparador <= arrayDeInputs[index]) {
+      numeroComparador = arrayDeInputs[index];
+    } else {
+      numeroComparador = numeroComparador;
+    }
+  }
+  return numeroComparador;
+}
+
+function calcularEdadMenor(arrayDeInputs) {
+  let numeroComparador = arrayDeInputs[0];
+
+  for (let index = 0; index < arrayDeInputs.length; index++) {
+    if (numeroComparador >= arrayDeInputs[index]) {
+      numeroComparador = arrayDeInputs[index];
+    } else {
+      numeroComparador = numeroComparador;
+    }
+  }
+  return numeroComparador;
+}
+
+function calcularEdadPromedio(inputs) {
+  let contador = 0;
+
+  for (let index = 0; index < arrayDeInputs.length; index++) {
+    contador = contador + arrayDeInputs[index];
+  }
+
+  let edadPromedio = contador / arrayDeInputs.length;
+
+  return edadPromedio;
+}
+
+botonEnviar.onclick = function () {
   let cantidadDeFamiliares = Number(document.querySelector("#cantidad").value);
 
   for (let index = 0; index < cantidadDeFamiliares; index++) {
@@ -28,81 +68,42 @@ document.querySelector(".enviar").onclick = function () {
     form.appendChild(label);
     form.appendChild(input);
   }
+};
 
-  document.querySelector(".calcular").onclick = function () {
-    let inputs = document.querySelectorAll(".input-familiar");
-    let arrayDeInputs = [];
-    let valorDelInput;
+botonCalcular.onclick = function () {
+  let inputs = document.querySelectorAll(".input-familiar");
+  let arrayDeInputs = [];
+  let valorDelInput;
 
-    for (let index = 0; index < inputs.length; index++) {
-      valorDelInput = Number(inputs[index].value);
-      arrayDeInputs.push(valorDelInput);
-    }
+  for (let index = 0; index < inputs.length; index++) {
+    valorDelInput = Number(inputs[index].value);
+    arrayDeInputs.push(valorDelInput);
+  }
 
-    function calcularEdadMayor() {
-      let numeroComparador = arrayDeInputs[0];
+  console.log(arrayDeInputs);
+  let em = document.querySelector("em");
+  em.textContent =
+    "el miembro con mas edad tiene " +
+    calcularEdadMayor(arrayDeInputs) +
+    " años, el miembro menor tiene " +
+    calcularEdadMenor(arrayDeInputs) +
+    " años y la edad promedio en el grupo familiar es de " +
+    calcularEdadPromedio(arrayDeInputs) +
+    " años";
+};
 
-      for (let index = 0; index < arrayDeInputs.length; index++) {
-        if (numeroComparador <= arrayDeInputs[index]) {
-          numeroComparador = arrayDeInputs[index];
-        } else {
-          numeroComparador = numeroComparador;
-        }
-      }
-      let edadMayor = numeroComparador;
-      return edadMayor;
-    }
+botonEliminar.onclick = function () {
+  let em = document.querySelector("em");
+  let label = document.querySelectorAll(".label-familiar");
+  let inputs = document.querySelectorAll(".input-familiar");
+  let br = document.querySelectorAll(".br");
 
-    function calcularEdadMenor() {
-      let numeroComparador = arrayDeInputs[0];
+  em.textContent =
+    "aca va a aparecer la edad mayor, menor y la promedio del grupo familiar";
 
-      for (let index = 0; index < arrayDeInputs.length; index++) {
-        if (numeroComparador >= arrayDeInputs[index]) {
-          numeroComparador = arrayDeInputs[index];
-        } else {
-          numeroComparador = numeroComparador;
-        }
-      }
-
-      let edadMenor = numeroComparador;
-      return edadMenor;
-    }
-
-    function calcularEdadPromedio() {
-      let contador = 0;
-
-      for (let index = 0; index < inputs.length; index++) {
-        contador = contador + Number(inputs[index].value);
-      }
-
-      let edadPromedio = contador / cantidadDeFamiliares;
-
-      return edadPromedio;
-    }
-
-    let em = document.querySelector("em");
-    em.textContent =
-      "el miembro con mas edad tiene " +
-      calcularEdadMayor() +
-      " años, el miembro menor tiene " +
-      calcularEdadMenor() +
-      " años y la edad promedio en el grupo familiar es de " +
-      calcularEdadPromedio() +
-      " años";
-  };
-
-  document.querySelector(".eliminar").onclick = function () {
-    let em = document.querySelector("em");
-    let label = document.querySelectorAll(".label-familiar");
-    let inputs = document.querySelectorAll(".input-familiar");
-    let br = document.querySelectorAll(".br");
-
-    em.textContent ="aca va a aparecer la edad mayor, menor y la promedio del grupo familiar";
-
-    for (let index = 0; index < inputs.length; index++) {
-      label[index].remove();
-      inputs[index].remove();
-      br[index].remove();
-    }
-  };
+  for (let index = 0; index < inputs.length; index++) {
+    label[index].remove();
+    inputs[index].remove();
+    br[index].remove();
+  }
 };

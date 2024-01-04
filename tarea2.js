@@ -7,11 +7,53 @@ Punto bonus: si hay inputs vacíos, ignorarlos en el cálculo (no contarlos como
 */
 
 let form = document.querySelector("#form");
+
 let botonCalcular = document.querySelector(".calcular");
+
 let botonAgregar = document.querySelector(".agregar");
+
 let botonEliminar = document.querySelector(".eliminar");
 
-document.querySelector(".enviar").onclick = function () {
+let botonEnviar = document.querySelector(".enviar");
+
+function calcularSalarioMayor(arrayDeInputs) {
+  let numeroComparador = arrayDeInputs[0];
+  for (let index = 0; index < arrayDeInputs.length; index++) {
+    if (numeroComparador >= arrayDeInputs[index]) {
+      numeroComparador = numeroComparador;
+    } else {
+      numeroComparador = arrayDeInputs[index];
+    }
+  }
+  return numeroComparador;
+}
+
+function calcularSalarioMenor(arrayDeInputs) {
+  let numeroComparador = arrayDeInputs[0];
+
+  for (let index = 0; index < arrayDeInputs.length; index++) {
+    if (numeroComparador <= arrayDeInputs[index]) {
+      numeroComparador = numeroComparador;
+    } else {
+      numeroComparador = arrayDeInputs[index];
+    }
+  }
+  return numeroComparador;
+}
+
+function calcularSalarioPromedio(arrayDeInputs) {
+  let contador = 0;
+
+  for (let index = 0; index < arrayDeInputs.length; index++) {
+    contador = contador + arrayDeInputs[index];
+  }
+
+  let salarioPromedio = contador / arrayDeInputs.length;
+
+  return salarioPromedio;
+}
+
+botonEnviar.onclick = function () {
   let cantidadDeFamiliares = Number(document.querySelector("#cantidad").value);
 
   for (let index = 0; index < cantidadDeFamiliares; index++) {
@@ -36,7 +78,7 @@ botonCalcular.onclick = function () {
   let arrayDeInputs = [];
   let arrayDeInputsEnCero = [];
   let valorDelInput;
-  
+
   for (let index = 0; index < inputs.length; index++) {
     valorDelInput = Number(inputs[index].value);
     if (valorDelInput === 0) {
@@ -46,64 +88,24 @@ botonCalcular.onclick = function () {
     }
   }
 
-  console.log(arrayDeInputs);
-
-  function calcularSalarioMayor() {
-    let numeroComparador = arrayDeInputs[0];
-    for (let index = 0; index < arrayDeInputs.length; index++) {
-      if (numeroComparador >= arrayDeInputs[index]) {
-        numeroComparador = numeroComparador;
-      } else {
-        numeroComparador = arrayDeInputs[index];
-      }
-    }
-    let numeroMayor = numeroComparador;
-
-    return numeroMayor;
-  }
-
-  function calcularSalarioMenor() {
-    let numeroComparador = arrayDeInputs[0];
-
-    for (let index = 0; index < arrayDeInputs.length; index++) {
-      if (numeroComparador <= arrayDeInputs[index]) {
-        numeroComparador = numeroComparador;
-      } else {
-        numeroComparador = arrayDeInputs[index];
-      }
-    }
-    let salarioMenor = numeroComparador;
-
-    return salarioMenor;
-  }
-
-  function calcularSalarioPromedio() {
-    let contador = 0;
-
-    for (let index = 0; index < arrayDeInputs.length; index++) {
-      contador = contador + arrayDeInputs[index];
-    }
-    let salarioPromedio = contador / arrayDeInputs.length;
-    return salarioPromedio;
-  }
-
   let em = document.querySelector("em");
   em.textContent =
     "el miembro con el salario mas alto cobra " +
-    calcularSalarioMayor() +
+    calcularSalarioMayor(arrayDeInputs) +
     " pesos, el miembro con el salario mas bajo cobra " +
-    calcularSalarioMenor() +
+    calcularSalarioMenor(arrayDeInputs) +
     " pesos, y el salario promedio en el grupo familiar es de " +
-    calcularSalarioPromedio() +
+    calcularSalarioPromedio(arrayDeInputs) +
     " pesos";
 };
+
 botonAgregar.onclick = function () {
   let br = document.createElement("br");
   br.className = "br";
   form.appendChild(br);
 
   let label = document.createElement("label");
-  label.textContent = "familiar " + 1;
+  label.textContent = "familiar agregado ";
   label.className = "label-agregar";
   form.appendChild(label);
 
